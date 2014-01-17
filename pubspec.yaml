@@ -1,0 +1,7 @@
+name: eventable
+author: Daniel Robinson
+description: simple synchronous event system for implementing model->event->view design pattern.
+dependencies:
+  json_object: any
+dev_dependencies:
+  unittest: any
