@@ -122,5 +122,13 @@ void main(){
       }));
     });
 
+    test('a detector will throw a DuplicateEventSettingError if it attempts to listen to the same emitter/event_type combination more than once', (){
+      try{
+        detector.listen(emitter1, TYPE_A, (event){});
+      }catch(error){
+        expect(error as DuplicateEventSettingError, equals(error));
+      }
+    });
+
   });
 }
