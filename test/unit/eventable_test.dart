@@ -79,7 +79,7 @@ void main(){
       }));
     });
 
-    test('detector.ignore() unhooks all EventActions', (){
+    test('Detector.ignore() unhooks all EventActions', (){
       detector.ignore();
       emitter1.emit(TYPE_A);
       emitter2.emit(TYPE_B);
@@ -89,7 +89,7 @@ void main(){
       }));
     });
 
-    test('detector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
+    test('Detector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
       detector.ignore(type: TYPE_A);
       emitter1.emit(TYPE_A);
       emitter2.emit(TYPE_B);
@@ -99,7 +99,7 @@ void main(){
       }));
     });
 
-    test('detector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
+    test('Detector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
       detector.ignore(emitter: emitter1);
       emitter1.emit(TYPE_A);
       emitter2.emit(TYPE_B);
@@ -109,7 +109,7 @@ void main(){
       }));
     });
 
-    test('listening to Eventable.OMNI event type detects all events from an emitter', (){
+    test('Listening to Eventable.OMNI event type detects all events from an emitter', (){
       detector.ignore();
       detector.listen(emitter1, Eventable.OMNI, detectEvent);
       emitter1.emit(TYPE_A);
@@ -122,11 +122,11 @@ void main(){
       }));
     });
 
-    test('a detector will throw a DuplicateEventSettingError if it attempts to listen to the same emitter/event_type combination more than once', (){
+    test('A detector will throw a DuplicateEventSettingError if it attempts to listen to the same emitter/event_type combination more than once', (){
       try{
         detector.listen(emitter1, TYPE_A, (event){});
       }catch(error){
-        expect(error as DuplicateEventSettingError, equals(error));
+        expect(error is DuplicateEventSettingError, equals(true));
       }
     });
 
