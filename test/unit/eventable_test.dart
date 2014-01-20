@@ -11,9 +11,9 @@ void main(){
     const String TYPE_A = 'type_a';
     const String TYPE_B = 'type_b';
 
-    Eventable emitter1;
-    Eventable emitter2;
-    Eventable detector;
+    Emitter emitter1;
+    Emitter emitter2;
+    Detector detector;
 
     Event lastDetectedEvent;
     int eventADetectedCount = 0;
@@ -31,9 +31,9 @@ void main(){
     };
 
     setUp((){
-      emitter1 = new Eventable();
-      emitter2 = new Eventable();
-      detector = new Eventable();
+      emitter1 = new Emitter();
+      emitter2 = new Emitter();
+      detector = new Detector();
 
       detector.listen(emitter1, TYPE_A, detectEvent);
       detector.listen(emitter2, TYPE_B, detectEvent);
@@ -45,7 +45,7 @@ void main(){
     });
 
     test('EventActions are called asynchronously', (){
-      emitter1.emit(TYPE_A);
+      emitter1.emitEvent(TYPE_A);
       expect(lastDetectedEvent, equals(null));
       Timer.run(expectAsync0((){
         expect(lastDetectedEvent.emitter, equals(emitter1));
@@ -53,21 +53,21 @@ void main(){
     });
 
     test('Events contain the emitter object', (){
-      emitter1.emit(TYPE_A);
+      emitter1.emitEvent(TYPE_A);
       Timer.run(expectAsync0((){
         expect(lastDetectedEvent.emitter, equals(emitter1));
       }));
     });
 
     test('Events contain the event type string', (){
-      emitter1.emit(TYPE_A);
+      emitter1.emitEvent(TYPE_A);
       Timer.run(expectAsync0((){
         expect(lastDetectedEvent.type, equals(TYPE_A));
       }));
     });
 
     test('Events are extendable, meaning new properties can be added to them at anytime', (){
-      emitter1.emit(
+      emitter1.emitEvent(
           TYPE_A,
           new Event()
           ..meaningOfLife = 42
@@ -79,47 +79,55 @@ void main(){
       }));
     });
 
-    test('detector.ignore() unhooks all EventActions', (){
+    test('Detector.ignore() unhooks all EventActions', (){
       detector.ignore();
-      emitter1.emit(TYPE_A);
-      emitter2.emit(TYPE_B);
+      emitter1.emitEvent(TYPE_A);
+      emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(0));
       }));
     });
 
-    test('detector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
+    test('Detector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
       detector.ignore(type: TYPE_A);
-      emitter1.emit(TYPE_A);
-      emitter2.emit(TYPE_B);
+      emitter1.emitEvent(TYPE_A);
+      emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(1));
       }));
     });
 
-    test('detector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
+    test('Detector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
       detector.ignore(emitter: emitter1);
-      emitter1.emit(TYPE_A);
-      emitter2.emit(TYPE_B);
+      emitter1.emitEvent(TYPE_A);
+      emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(1));
       }));
     });
 
-    test('listening to Eventable.OMNI event type detects all events from an emitter', (){
+    test('Listening to Emitter.OMNI event type detects all events from an emitter', (){
       detector.ignore();
-      detector.listen(emitter1, Eventable.OMNI, detectEvent);
-      emitter1.emit(TYPE_A);
-      emitter1.emit(TYPE_A);
-      emitter1.emit(TYPE_B);
-      emitter2.emit(TYPE_B);
+      detector.listen(emitter1, OMNI, detectEvent);
+      emitter1.emitEvent(TYPE_A);
+      emitter1.emitEvent(TYPE_A);
+      emitter1.emitEvent(TYPE_B);
+      emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
         expect(eventADetectedCount, equals(2));
         expect(eventBDetectedCount, equals(1));
       }));
+    });
+
+    test('A detector will throw a DuplicateEventSettingError if it attempts to listen to the same emitter/event_type combination more than once', (){
+      try{
+        detector.listen(emitter1, TYPE_A, (event){});
+      }catch(error){
+        expect(error is DuplicateEventSettingError, equals(true));
+      }
     });
 
   });
