@@ -4,9 +4,16 @@ class Emitter{
 
 
   Map<String, List<EventAction>> _actionQueues;
+  bool get isEmitting => _emittingType != null;
+  String _emittingType;
+  String get emittingType => _emittingType;
 
 
   void addEventAction(String type, EventAction action){
+    if(_emittingType == type){
+      _emittingType = null;
+      throw new EmitTimeQueueChangeError(this, type, action);
+    }
     if(_actionQueues == null){
       _actionQueues = new Map<String, List<EventAction>>();
     }
@@ -18,6 +25,10 @@ class Emitter{
 
 
   void removeEventAction(String type, EventAction action){
+    if(_emittingType == type){
+      _emittingType = null;
+      throw new EmitTimeQueueChangeError(this, type, action);
+    }
     if(_actionQueues != null && _actionQueues[type] != null){
       _actionQueues[type].remove(action);
       if(_actionQueues[type].isEmpty){
@@ -27,7 +38,7 @@ class Emitter{
   }
 
 
-  void emitEvent(String type, [IEvent event]){
+  Future emitEvent(String type, [IEvent event]){
     if(event == null){
       event = new Event();
     }
@@ -35,7 +46,8 @@ class Emitter{
     event.type = type;
 
     //make eventQueues execute async so only one event queue is ever executing at a time.
-    Timer.run((){
+    return new Future.delayed(new Duration(), (){
+      _emittingType = type;
       if(_actionQueues != null && _actionQueues[type] != null){
         _actionQueues[type].forEach((EventAction action){ action(event); });
       }
@@ -43,6 +55,7 @@ class Emitter{
       if(_actionQueues != null && _actionQueues[OMNI] != null){
         _actionQueues[OMNI].forEach((EventAction action){ action(event); });
       }
+      _emittingType = null;
     });
   }
 

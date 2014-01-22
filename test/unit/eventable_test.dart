@@ -130,5 +130,19 @@ void main(){
       }
     });
 
+    test('An emitter will throw a EmitTimeQueueChangeError if an attempt is made to add or remove an EventAction during the time that event is being emitted', (){
+      var detectorCopy = detector;
+      var error;
+      emitter1.addEventAction(TYPE_A, (event){
+          detectorCopy.ignore();
+      });
+      emitter1.emitEvent(TYPE_A).catchError((e){
+        error = e;
+      });
+      Timer.run(expectAsync0((){
+        expect(error is EmitTimeQueueChangeError, equals(true));
+      }));
+    });
+
   });
 }
