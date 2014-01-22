@@ -38,7 +38,7 @@ class Emitter{
   }
 
 
-  void emitEvent(String type, [IEvent event]){
+  Future emitEvent(String type, [IEvent event]){
     if(event == null){
       event = new Event();
     }
@@ -46,7 +46,7 @@ class Emitter{
     event.type = type;
 
     //make eventQueues execute async so only one event queue is ever executing at a time.
-    Timer.run((){
+    return new Future.delayed(new Duration(), (){
       _emittingType = type;
       if(_actionQueues != null && _actionQueues[type] != null){
         _actionQueues[type].forEach((EventAction action){ action(event); });
