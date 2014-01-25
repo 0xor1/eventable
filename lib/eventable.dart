@@ -8,8 +8,8 @@ import 'dart:async';
 part 'emit_time_queue_change_error.dart';
 part 'duplicate_event_setting_error.dart';
 part 'event.dart';
-part 'emitter.dart';
-part 'detector.dart';
+part 'event_emitter.dart';
+part 'event_detector.dart';
 
 
 const String OMNI = 'omni';

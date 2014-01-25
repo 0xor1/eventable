@@ -1,6 +1,6 @@
 part of Eventable;
 
-class Emitter{
+class EventEmitter{
 
 
   Map<String, List<EventAction>> _actionQueues;
