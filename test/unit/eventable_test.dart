@@ -1,3 +1,7 @@
+/**
+ * author: Daniel Robinson  http://github.com/0xor1
+ */
+
 library EventableTest;
 
 import 'package:unittest/unittest.dart';

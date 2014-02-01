@@ -1,13 +1,15 @@
+/**
+ * author: Daniel Robinson  http://github.com/0xor1
+ */
+
 part of Eventable;
 
 class EventEmitter{
-
 
   Map<String, List<EventAction>> _actionQueues;
   bool get isEmitting => _emittingType != null;
   String _emittingType;
   String get emittingType => _emittingType;
-
 
   void addEventAction(String type, EventAction action){
     if(_emittingType == type){
@@ -23,7 +25,6 @@ class EventEmitter{
     _actionQueues[type].add(action);
   }
 
-
   void removeEventAction(String type, EventAction action){
     if(_emittingType == type){
       _emittingType = null;
@@ -36,7 +37,6 @@ class EventEmitter{
       }
     }
   }
-
 
   Future emitEvent(String type, [IEvent event]){
     if(event == null){
@@ -58,6 +58,5 @@ class EventEmitter{
       _emittingType = null;
     });
   }
-
 
 }

@@ -1,13 +1,14 @@
+/**
+ * author: Daniel Robinson  http://github.com/0xor1
+ */
+
 library EventableExample;
 
-
 import 'package:eventable/eventable.dart';
-
 
 part 'bark_event.dart';
 part 'cat.dart';
 part 'dog.dart';
-
 
 /**
  * trivial example just to show basic usage pattern

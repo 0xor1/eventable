@@ -1,12 +1,13 @@
-part of Eventable;
+/**
+ * author: Daniel Robinson  http://github.com/0xor1
+ */
 
+part of Eventable;
 
 class EventDetector{
 
-
   Map<EventEmitter, Map<String, EventAction>> _typeIndexes;
   Map<String, Map<EventEmitter, EventAction>> _emitterIndexes;
-
 
   void listen(EventEmitter emitter, String type, EventAction action){
     _initialiseIndexes(emitter, type);
@@ -17,7 +18,6 @@ class EventDetector{
       emitter.addEventAction(type, action);
     }
   }
-
 
   void _initialiseIndexes(emitter, type){
     if(_typeIndexes == null){
@@ -34,7 +34,6 @@ class EventDetector{
     }
   }
 
-
   void ignoreSpecificEventBinding(EventEmitter emitter, String type){
     if(_typeIndexes != null && _typeIndexes[emitter] != null && _typeIndexes[emitter][type] != null){
       EventAction action = _typeIndexes[emitter].remove(type);
@@ -49,7 +48,6 @@ class EventDetector{
     }
   }
 
-
   void ignoreAllEventsOfType(String type){
     if(_emitterIndexes != null && _emitterIndexes[type] != null){
       var emitterIndex = _emitterIndexes[type];
@@ -58,7 +56,6 @@ class EventDetector{
       }
     }
   }
-
 
   void ignoreAllEventsFrom(EventEmitter emitter){
     if(_typeIndexes != null && _typeIndexes[emitter] != null){
@@ -69,12 +66,10 @@ class EventDetector{
     }
   }
 
-
   void ignoreAllEvents(){
     while(_typeIndexes.isNotEmpty){
       ignoreAllEventsFrom(_typeIndexes.keys.first);
     }
   }
-
 
 }
