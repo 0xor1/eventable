@@ -4,7 +4,7 @@ Eventable provides 2 mixins to make your classes eventable, **EventEmitter** and
 **EventDetector**. Simply use these mixins to make your types either *emit*,
 *detect* or do *both* for *custom events*. To make a custom event simply extend 
 off of the **Event** class and specify an interface implementation, but you do 
-not have to implement it as Event is in fact a [Json_Object](https://github.com/chrisbu/dartwatch-JsonObject).
+not have to implement it as **Event** is in fact a [Json_Object](https://github.com/chrisbu/dartwatch-JsonObject).
 One final note to be aware of is that events are emitted asynchronously. Usage is
 best described with a simple example:
 
@@ -60,8 +60,8 @@ void main(){
 
 ##OMNI
 
-There is a special event type called OMNI which is a top level string constant
-in the eventable library which has the value 'omni', this is a special value
+There is a special event type called **OMNI** which is a top level string constant
+in the eventable library which has the value ```'omni'```, this is a special value
 which allows you to listen to every event emitted by an **EventEmitter** with a
 single **EventAction**, therefore it is strongly recommended when implementing your
 own event types you do not use 'omni' or you may find incorrect program behaviour
