@@ -102,5 +102,5 @@ a **DuplicateEventSettingError** will be thrown.
 
 It is not permitted to add or remove **EventAction**s whilst the event is being
 emitted, meaning you may not attach an **EventAction** to an event which adds or
-removes *EventAction**s from that same event, if such an attempt is made a 
+removes **EventAction**s from that same event, if such an attempt is made a 
 **EmitTimeQueueChangeError** will be thrown.
