@@ -1,7 +1,9 @@
 name: eventable
 author: Daniel Robinson
 version: 1.0.0
+homepage: https://github.com/0xor1/eventable#eventable-
 description: simple event system for implementing model->event->view design pattern.
+documentation: https://github.com/0xor1/eventable#eventable-
 dependencies:
   json_object: any
 dev_dependencies:
