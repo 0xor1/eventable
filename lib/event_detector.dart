@@ -4,15 +4,22 @@
 
 part of Eventable;
 
+/**
+ * Mixin to enable any object to detect custom events and manage [EventAction]s,
+ * used in conjunction with [EventEmitter]s.
+ */
 class EventDetector{
 
   Map<EventEmitter, Map<String, EventAction>> _typeIndexes;
   Map<String, Map<EventEmitter, EventAction>> _emitterIndexes;
 
+  /**
+   * Adds an [action] to the [emitter]s action queue of [type].
+   */
   void listen(EventEmitter emitter, String type, EventAction action){
     _initialiseIndexes(emitter, type);
     if(_typeIndexes[emitter][type] != null){
-      throw new DuplicateEventSettingError(this, emitter, type);
+      throw new DuplicateEventSettingError(this, emitter, type, _typeIndexes[emitter][type], action);
     }else{
       _typeIndexes[emitter][type] = _emitterIndexes[type][emitter] = action;
       emitter.addEventAction(type, action);
@@ -34,6 +41,9 @@ class EventDetector{
     }
   }
 
+  /**
+   * Removes the [EventAction] assigned to the [emitter]s action queue of [type].
+   */
   void ignoreSpecificEventBinding(EventEmitter emitter, String type){
     if(_typeIndexes != null && _typeIndexes[emitter] != null && _typeIndexes[emitter][type] != null){
       EventAction action = _typeIndexes[emitter].remove(type);
@@ -48,6 +58,9 @@ class EventDetector{
     }
   }
 
+  /**
+   * Removes all [EventAction]s attached to all action queues of [type].
+   */
   void ignoreAllEventsOfType(String type){
     if(_emitterIndexes != null && _emitterIndexes[type] != null){
       var emitterIndex = _emitterIndexes[type];
@@ -57,6 +70,9 @@ class EventDetector{
     }
   }
 
+  /**
+   * Removes all [EventAction]s attached to [emitter].
+   */
   void ignoreAllEventsFrom(EventEmitter emitter){
     if(_typeIndexes != null && _typeIndexes[emitter] != null){
       var typeIndex = _typeIndexes[emitter];
@@ -66,6 +82,9 @@ class EventDetector{
     }
   }
 
+  /**
+   * Removes all [EventAction]s this object has previously attached to all [EventEmitter]s and of all event types.
+   */
   void ignoreAllEvents(){
     while(_typeIndexes.isNotEmpty){
       ignoreAllEventsFrom(_typeIndexes.keys.first);

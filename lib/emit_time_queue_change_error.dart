@@ -4,6 +4,10 @@
 
 part of Eventable;
 
+/**
+ * Thrown when an [EventAction] attempts to add or remove [EventAction](s) from
+ * the action queue currently being called.
+ */
 class EmitTimeQueueChangeError extends Error{
 
   final String message;

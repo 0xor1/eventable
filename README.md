@@ -58,6 +58,19 @@ void main(){
 }
 ```
 
+##Design Ethos
+
+**Eventable** was designed to allow objects to interact in a loose and non coupled way.
+The typical usage pattern envisaged was to have a *model* as an **EventEmitter** and
+one or more *views* as **EventDetector**s of that model, listening to it via its asynchronous
+events. This way the model operates completely independently of the views and views
+are easily discarded by calling ```aView.ignoreAllEvents();``` which will fully detach
+all of the views EventActions, for all event types and **EventEmitter**s.
+
+It is still possible and perfectly legal to use **EventEmitter**s without **EventDetector**s
+as they expose their own ```addEventAction``` and ```removeEventAction``` methods,
+but this leaves it to the user to handle how to manage removal of the attached **EventAction**s.
+
 ##OMNI
 
 There is a special event type called **OMNI** which is a top level string constant
