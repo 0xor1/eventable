@@ -1,3 +1,7 @@
+/**
+ * author: Daniel Robinson  http://github.com/0xor1
+ */
+
 library EventableTest;
 
 import 'package:unittest/unittest.dart';
@@ -11,9 +15,9 @@ void main(){
     const String TYPE_A = 'type_a';
     const String TYPE_B = 'type_b';
 
-    Emitter emitter1;
-    Emitter emitter2;
-    Detector detector;
+    EventEmitter emitter1;
+    EventEmitter emitter2;
+    EventDetector detector;
 
     Event lastDetectedEvent;
     int eventADetectedCount = 0;
@@ -31,9 +35,9 @@ void main(){
     };
 
     setUp((){
-      emitter1 = new Emitter();
-      emitter2 = new Emitter();
-      detector = new Detector();
+      emitter1 = new EventEmitter();
+      emitter2 = new EventEmitter();
+      detector = new EventDetector();
 
       detector.listen(emitter1, TYPE_A, detectEvent);
       detector.listen(emitter2, TYPE_B, detectEvent);
@@ -79,8 +83,8 @@ void main(){
       }));
     });
 
-    test('Detector.ignore() unhooks all EventActions', (){
-      detector.ignore();
+    test('EventDetector.ignore() unhooks all EventActions', (){
+      detector.ignoreAllEvents();
       emitter1.emitEvent(TYPE_A);
       emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
@@ -89,8 +93,8 @@ void main(){
       }));
     });
 
-    test('Detector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
-      detector.ignore(type: TYPE_A);
+    test('EventDetector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
+      detector.ignoreAllEventsOfType(TYPE_A);
       emitter1.emitEvent(TYPE_A);
       emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
@@ -99,8 +103,8 @@ void main(){
       }));
     });
 
-    test('Detector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
-      detector.ignore(emitter: emitter1);
+    test('EventDetector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
+      detector.ignoreAllEventsFrom(emitter1);
       emitter1.emitEvent(TYPE_A);
       emitter2.emitEvent(TYPE_B);
       Timer.run(expectAsync0((){
@@ -109,8 +113,8 @@ void main(){
       }));
     });
 
-    test('Listening to Emitter.OMNI event type detects all events from an emitter', (){
-      detector.ignore();
+    test('Listening to OMNI event type detects all events from an emitter', (){
+      detector.ignoreAllEvents();
       detector.listen(emitter1, OMNI, detectEvent);
       emitter1.emitEvent(TYPE_A);
       emitter1.emitEvent(TYPE_A);
@@ -134,7 +138,7 @@ void main(){
       var detectorCopy = detector;
       var error;
       emitter1.addEventAction(TYPE_A, (event){
-          detectorCopy.ignore();
+          detectorCopy.ignoreAllEvents();
       });
       emitter1.emitEvent(TYPE_A).catchError((e){
         error = e;
