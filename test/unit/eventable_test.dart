@@ -83,7 +83,7 @@ void main(){
       }));
     });
 
-    test('EventDetector.ignore() unhooks all EventActions', (){
+    test('EventDetector.ignoreAllEvents() unhooks all EventActions', (){
       detector.ignoreAllEvents();
       emitter1.emitEvent(TYPE_A);
       emitter2.emitEvent(TYPE_B);
@@ -93,7 +93,7 @@ void main(){
       }));
     });
 
-    test('EventDetector.ignore(type:eventType) unhooks all EventActions of the specified type', (){
+    test('EventDetector.ignoreAllEventsOfType(eventType) unhooks all EventActions of the specified type', (){
       detector.ignoreAllEventsOfType(TYPE_A);
       emitter1.emitEvent(TYPE_A);
       emitter2.emitEvent(TYPE_B);
@@ -103,7 +103,7 @@ void main(){
       }));
     });
 
-    test('EventDetector.ignore(emitter: obj) unhooks all EventActions from the specified emitter', (){
+    test('EventDetector.ignoreAllEventsFrom(emitter) unhooks all EventActions from the specified emitter', (){
       detector.ignoreAllEventsFrom(emitter1);
       emitter1.emitEvent(TYPE_A);
       emitter2.emitEvent(TYPE_B);
