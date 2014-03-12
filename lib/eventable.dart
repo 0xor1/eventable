@@ -8,7 +8,7 @@
  */
 library Eventable;
 
-import 'package:json_object/json_object.dart';
+import 'package:transmittable/transmittable.dart';
 import 'dart:async';
 
 part 'emit_time_queue_change_error.dart';
