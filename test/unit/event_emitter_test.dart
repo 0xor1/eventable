@@ -20,7 +20,7 @@ void runEventEmitterTests(){
       }));
     });
 
-    test('listening to OMNI event type detects all events from an emitter.', (){
+    test('listening to Omni event type detects all events from an emitter.', (){
       detector.ignoreAllEvents();
       detector.listen(emitter1, Omni, detectEvent);
       emitter1.emitEvent(TypeA);

@@ -19,7 +19,7 @@ void runEventTests(){
       }));
     });
 
-    test('contains the event type string by default.', (){
+    test('contains the event type by default.', (){
       emitter1.emitEvent(TypeA);
       Timer.run(expectAsync0((){
         expect(lastDetectedEvent.type, equals(TypeA));
