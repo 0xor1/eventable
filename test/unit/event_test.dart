@@ -13,22 +13,22 @@ void runEventTests(){
     tearDown(tearDownTestObjects);
 
     test('contains the emitter object by default.', (){
-      emitter1.emitEvent(TYPE_A);
+      emitter1.emitEvent(TypeA);
       Timer.run(expectAsync0((){
         expect(lastDetectedEvent.emitter, equals(emitter1));
       }));
     });
 
     test('contains the event type string by default.', (){
-      emitter1.emitEvent(TYPE_A);
+      emitter1.emitEvent(TypeA);
       Timer.run(expectAsync0((){
-        expect(lastDetectedEvent.type, equals(TYPE_A));
+        expect(lastDetectedEvent.type, equals(TypeA));
       }));
     });
 
     test('is extendable, meaning new properties can be added at anytime.', (){
       emitter1.emitEvent(
-          TYPE_A,
+          TypeA,
           new Event()
           ..meaningOfLife = 42
           ..crazyString = 'a_crazy_string'

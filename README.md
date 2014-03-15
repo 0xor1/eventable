@@ -4,7 +4,7 @@ Eventable provides 2 mixins to make your classes eventable, **EventEmitter** and
 **EventDetector**. Simply use these mixins to make your types either *emit*,
 *detect* or do *both* for *custom events*. To make a custom event simply extend 
 off of the **Event** class and specify an interface implementation, but you do 
-not have to implement it as **Event** is in fact a [Json_Object](https://github.com/chrisbu/dartwatch-JsonObject).
+not have to implement it as **Event** is in fact a [Transmittable](http://pub.dartlang.org/packages/transmittable).
 One final note to be aware of is that events are emitted asynchronously. Usage is
 best described with a simple example:
 
@@ -13,11 +13,9 @@ best described with a simple example:
 ```dart
 class Dog extends Object with EventEmitter{
 
-  static const String BARK = 'dog_bark';
-
   void bark(int volume){
     emitEvent(
-        BARK,
+        BarkEvent,
         new BarkEvent()
         ..volume = volume);
   }
@@ -50,7 +48,7 @@ void main(){
   var dog = new Dog();
   var cat = new Cat();
 
-  cat.listen(dog, Dog.BARK, cat.dogBarkHandler);
+  cat.listen(dog, BarkEvent, cat.dogBarkHandler);
 
   dog.bark(9);  // cat not disturbed
   dog.bark(11); // cat runs away
@@ -71,14 +69,11 @@ It is still possible and perfectly legal to use **EventEmitter**s without **Even
 as they expose their own ```addEventAction``` and ```removeEventAction``` methods,
 but this leaves it to the user to handle how to manage removal of the attached **EventAction**s.
 
-##OMNI
+##Omni
 
-There is a special event type called **OMNI** which is a top level string constant
-in the eventable library which has the value ```'omni'```, this is a special value
+There is a special event type **Omni** which is a special value
 which allows you to listen to every event emitted by an **EventEmitter** with a
-single **EventAction**, therefore it is strongly recommended when implementing your
-own event types you do not use 'omni' or you may find incorrect program behaviour
-as a result of doing so.
+single **EventAction**.
 
 ##EventAction
 

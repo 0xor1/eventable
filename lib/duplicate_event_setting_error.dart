@@ -8,23 +8,15 @@ part of Eventable;
  * Thrown when [detector] attempts to add [newAction] to [emitter]s action queue
  * of [type] and an [existingAction] is already assigned.
  */
-class DuplicateEventSettingError extends Error{
+class DuplicateEventSettingError{
 
-  final String message;
-  final String type;
+  String get message => 'The detector is already listening for the "$type" event from the given emitter';
+  final Type type;
   final EventEmitter emitter;
   final EventDetector detector;
   final EventAction existingAction;
   final EventAction newAction;
 
-  DuplicateEventSettingError(EventDetector detector, EventEmitter emitter, String type, EventAction existingAction, EventAction newAction):
-    message = 'The detector is already listening for the "$type" event from the given emitter',
-    type = type,
-    emitter = emitter,
-    detector = detector,
-    existingAction = existingAction,
-    newAction = newAction
-    {
-    }
+  const DuplicateEventSettingError(EventDetector this.detector, EventEmitter this.emitter, Type this.type, EventAction this.existingAction, EventAction this.newAction);
 
 }

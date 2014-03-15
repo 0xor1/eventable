@@ -10,13 +10,13 @@ part of Eventable;
  */
 class EventDetector{
 
-  Map<EventEmitter, Map<String, EventAction>> _typeIndexes;
-  Map<String, Map<EventEmitter, EventAction>> _emitterIndexes;
+  Map<EventEmitter, Map<Type, EventAction>> _typeIndexes;
+  Map<Type, Map<EventEmitter, EventAction>> _emitterIndexes;
 
   /**
    * Adds an [action] to the [emitter]s action queue of [type].
    */
-  void listen(EventEmitter emitter, String type, EventAction action){
+  void listen(EventEmitter emitter, Type type, EventAction action){
     _initialiseIndexes(emitter, type);
     if(_typeIndexes[emitter][type] != null){
       throw new DuplicateEventSettingError(this, emitter, type, _typeIndexes[emitter][type], action);
@@ -26,15 +26,15 @@ class EventDetector{
     }
   }
 
-  void _initialiseIndexes(emitter, type){
+  void _initialiseIndexes(EventEmitter emitter, Type type){
     if(_typeIndexes == null){
-      _typeIndexes = new Map<EventEmitter, Map<String, EventAction>>();
+      _typeIndexes = new Map<EventEmitter, Map<Type, EventAction>>();
     }
     if(_typeIndexes[emitter] == null){
-      _typeIndexes[emitter] = new Map<String, EventAction>();
+      _typeIndexes[emitter] = new Map<Type, EventAction>();
     }
     if(_emitterIndexes == null){
-      _emitterIndexes = new Map<String, Map<EventEmitter, EventAction>>();
+      _emitterIndexes = new Map<Type, Map<EventEmitter, EventAction>>();
     }
     if(_emitterIndexes[type] == null){
       _emitterIndexes[type] = new Map<EventEmitter, EventAction>();
@@ -44,7 +44,7 @@ class EventDetector{
   /**
    * Removes the [EventAction] assigned to the [emitter]s action queue of [type].
    */
-  void ignoreSpecificEventBinding(EventEmitter emitter, String type){
+  void ignoreSpecificEventBinding(EventEmitter emitter, Type type){
     if(_typeIndexes != null && _typeIndexes[emitter] != null && _typeIndexes[emitter][type] != null){
       EventAction action = _typeIndexes[emitter].remove(type);
       _emitterIndexes[type].remove(emitter);
@@ -61,7 +61,7 @@ class EventDetector{
   /**
    * Removes all [EventAction]s attached to all action queues of [type].
    */
-  void ignoreAllEventsOfType(String type){
+  void ignoreAllEventsOfType(Type type){
     if(_emitterIndexes != null && _emitterIndexes[type] != null){
       var emitterIndex = _emitterIndexes[type];
       while(emitterIndex.isNotEmpty){

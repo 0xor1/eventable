@@ -10,6 +10,6 @@ part of Eventable;
  */
 class Event extends Transmittable implements IEvent{}
 abstract class IEvent{
-  String type;
+  Type type;
   EventEmitter emitter;
 }

@@ -12,8 +12,8 @@ part 'event_emitter_test.dart';
 part 'event_test.dart';
 part 'event_detector_test.dart';
 
-const String TYPE_A = 'type_a';
-const String TYPE_B = 'type_b';
+class TypeA extends Event{}
+class TypeB extends Event{}
 
 EventEmitter emitter1;
 EventEmitter emitter2;
@@ -24,14 +24,13 @@ int eventADetectedCount;
 int eventBDetectedCount;
 
 EventAction detectEvent = (event){
-  if(event.type == TYPE_A){
+  if(event.type == TypeA){
     eventADetectedCount++;
   }
-  else if(event.type == TYPE_B){
+  else if(event.type == TypeB){
     eventBDetectedCount++;
   }
   lastDetectedEvent = event;
-  //print('event detected');
 };
 
 void setUpTestObjects(){
@@ -41,8 +40,8 @@ void setUpTestObjects(){
 
   eventADetectedCount = eventBDetectedCount = 0;
 
-  detector.listen(emitter1, TYPE_A, detectEvent);
-  detector.listen(emitter2, TYPE_B, detectEvent);
+  detector.listen(emitter1, TypeA, detectEvent);
+  detector.listen(emitter2, TypeB, detectEvent);
 }
 
 void tearDownTestObjects(){

@@ -17,8 +17,11 @@ part 'event.dart';
 part 'event_emitter.dart';
 part 'event_detector.dart';
 
-/// Special event type which allows an [EventAction] to be called on all event types.
-const String OMNI = 'omni';
+/**
+ * Special [Event] type used for listening to all events from an [EventEmitter]
+ * with a single [EventAction].
+ */
+class Omni extends Event{}
 
 /// Function signature of an [EventAction].
 typedef void EventAction(Event event);
