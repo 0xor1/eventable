@@ -5,7 +5,7 @@
 part of Eventable;
 
 /**
- * An extendable [Transmittable] used to pass information to [EventAction]s about
+ * A [Transmittable] used to pass information to [EventAction]s about
  * the current [Event] being emitted.
  */
 class Event extends Transmittable implements IEvent{}
