@@ -21,7 +21,14 @@ part 'event_detector.dart';
  * Special [Event] type used for listening to all events from an [EventEmitter]
  * with a single [EventAction].
  */
-class Omni extends Event{}
+abstract class Omni extends Event{}
 
 /// Function signature of an [EventAction].
 typedef void EventAction(Event event);
+
+bool _registeredTranTypes = false;
+void _registerTranTypes(){
+  if(_registeredTranTypes){ return; }
+  _registeredTranTypes = true;
+  registerTranSubtype('ev', Event);
+}

@@ -54,6 +54,7 @@ class EventEmitter{
    * returning a [Future] that completes when all of the actions have been called.
    */
   Future emitEvent(Type type, [IEvent event]){
+    _registerTranTypes();
     if(event == null){
       event = new Event();
     }
