@@ -24,10 +24,10 @@ int eventADetectedCount;
 int eventBDetectedCount;
 
 EventAction detectEvent = (event){
-  if(event.type == TypeA){
+  if(event is TypeA){
     eventADetectedCount++;
   }
-  else if(event.type == TypeB){
+  else if(event is TypeB){
     eventBDetectedCount++;
   }
   lastDetectedEvent = event;

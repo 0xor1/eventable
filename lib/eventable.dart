@@ -10,6 +10,7 @@ library Eventable;
 
 import 'package:transmittable/transmittable.dart';
 import 'dart:async';
+import 'dart:mirrors';
 
 part 'emit_time_queue_change_error.dart';
 part 'duplicate_event_setting_error.dart';

@@ -53,19 +53,18 @@ class EventEmitter{
    * Calls all the actions in the queue of [type] with the optional [event] asynchronously,
    * returning a [Future] that completes when all of the actions have been called.
    */
-  Future emitEvent(Type type, [IEvent event]){
+  Future emitEvent(Event event){
     _registerTranTypes();
     if(event == null){
       event = new Event();
     }
     event.emitter = this;
-    event.type = type;
 
     //make eventQueues execute async so only one event queue is ever executing at a time.
     return new Future.delayed(new Duration(), (){
-      _emittingType = type;
-      if(_actionQueues != null && _actionQueues[type] != null){
-        _actionQueues[type].forEach((EventAction action){ action(event); });
+      _emittingType = reflect(event).type.reflectedType;
+      if(_actionQueues != null && _actionQueues[_emittingType] != null){
+        _actionQueues[_emittingType].forEach((EventAction action){ action(event); });
       }
 
       if(_actionQueues != null && _actionQueues[Omni] != null){
