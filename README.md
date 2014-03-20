@@ -15,7 +15,6 @@ class Dog extends Object with EventEmitter{
 
   void bark(int volume){
     emitEvent(
-        BarkEvent,
         new BarkEvent()
         ..volume = volume);
   }
@@ -56,10 +55,8 @@ void main(){
 }
 ```
 
-##Design Ethos
-
 **Eventable** was designed to allow objects to interact in a loose and non coupled way.
-The typical usage pattern envisaged was to have a *model* as an **EventEmitter** and
+The typical usage pattern is to have a *model* as an **EventEmitter** and
 one or more *views* as **EventDetector**s of that model, listening to it via its asynchronous
 events. This way the model operates completely independently of the views and views
 are easily discarded by calling ```aView.ignoreAllEvents();``` which will fully detach
