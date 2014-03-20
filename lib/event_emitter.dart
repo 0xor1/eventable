@@ -9,23 +9,23 @@ part of Eventable;
  */
 class EventEmitter{
 
-  Map<String, List<EventAction>> _actionQueues;
+  Map<Type, List<EventAction>> _actionQueues;
   /// Describes whether the object is currently emitting an event.
   bool get isEmitting => _emittingType != null;
-  String _emittingType;
+  Type _emittingType;
   /// Specifies which event type is currently being emitted by the object.
-  String get emittingType => _emittingType;
+  Type get emittingType => _emittingType;
 
   /**
    * Adds the [action] to the action queue of [type].
    */
-  void addEventAction(String type, EventAction action){
+  void addEventAction(Type type, EventAction action){
     if(_emittingType == type){
       _emittingType = null;
       throw new EmitTimeQueueChangeError(this, type, action);
     }
     if(_actionQueues == null){
-      _actionQueues = new Map<String, List<EventAction>>();
+      _actionQueues = new Map<Type, List<EventAction>>();
     }
     if(_actionQueues[type] == null){
       _actionQueues[type] = new List<EventAction>();
@@ -36,7 +36,7 @@ class EventEmitter{
   /**
    * Removes the [action] from the action queue of [type].
    */
-  void removeEventAction(String type, EventAction action){
+  void removeEventAction(Type type, EventAction action){
     if(_emittingType == type){
       _emittingType = null;
       throw new EmitTimeQueueChangeError(this, type, action);
@@ -53,22 +53,22 @@ class EventEmitter{
    * Calls all the actions in the queue of [type] with the optional [event] asynchronously,
    * returning a [Future] that completes when all of the actions have been called.
    */
-  Future emitEvent(String type, [IEvent event]){
+  Future emitEvent(Event event){
+    _registerTranTypes();
     if(event == null){
       event = new Event();
     }
     event.emitter = this;
-    event.type = type;
 
     //make eventQueues execute async so only one event queue is ever executing at a time.
     return new Future.delayed(new Duration(), (){
-      _emittingType = type;
-      if(_actionQueues != null && _actionQueues[type] != null){
-        _actionQueues[type].forEach((EventAction action){ action(event); });
+      _emittingType = reflect(event).type.reflectedType;
+      if(_actionQueues != null && _actionQueues[_emittingType] != null){
+        _actionQueues[_emittingType].forEach((EventAction action){ action(event); });
       }
 
-      if(_actionQueues != null && _actionQueues[OMNI] != null){
-        _actionQueues[OMNI].forEach((EventAction action){ action(event); });
+      if(_actionQueues != null && _actionQueues[Omni] != null){
+        _actionQueues[Omni].forEach((EventAction action){ action(event); });
       }
       _emittingType = null;
     });

@@ -18,7 +18,7 @@ void main(){
   var dog = new Dog();
   var cat = new Cat();
 
-  cat.listen(dog, Dog.BARK, cat.dogBarkHandler);
+  cat.listen(dog, BarkEvent, cat.dogBarkHandler);
 
   dog.bark(9);  // cat not disturbed
   dog.bark(11); // cat runs away

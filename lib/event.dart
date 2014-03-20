@@ -5,11 +5,10 @@
 part of Eventable;
 
 /**
- * An extendable [Json_Object] used to pass information to [EventAction]s about
+ * A [Transmittable] used to pass information to [EventAction]s about
  * the current [Event] being emitted.
  */
-class Event extends JsonObject implements IEvent{}
+class Event extends Transmittable implements IEvent{}
 abstract class IEvent{
-  String type;
   EventEmitter emitter;
 }
