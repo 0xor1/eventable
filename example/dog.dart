@@ -8,7 +8,6 @@ class Dog extends Object with EventEmitter{
 
   void bark(int volume){
     emitEvent(
-        BarkEvent,
         new BarkEvent()
         ..volume = volume);
   }
