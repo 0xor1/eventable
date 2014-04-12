@@ -8,28 +8,20 @@
  */
 library Eventable;
 
-import 'package:transmittable/transmittable.dart';
 import 'dart:async';
 import 'dart:mirrors';
 
 part 'emit_time_queue_change_error.dart';
 part 'duplicate_event_setting_error.dart';
-part 'event.dart';
+part 'i_event.dart';
 part 'event_emitter.dart';
 part 'event_detector.dart';
 
 /**
- * Special [Event] type used for listening to all events from an [EventEmitter]
+ * Special type used for listening to all events from an [EventEmitter]
  * with a single [EventAction].
  */
-abstract class Omni extends Event{}
+abstract class Omni implements IEvent{}
 
 /// Function signature of an [EventAction].
-typedef void EventAction(Event event);
-
-bool _registeredTranTypes = false;
-void _registerTranTypes(){
-  if(_registeredTranTypes){ return; }
-  _registeredTranTypes = true;
-  registerTranSubtype('ev', Event);
-}
+typedef void EventAction(IEvent event);

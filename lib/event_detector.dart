@@ -17,7 +17,6 @@ class EventDetector{
    * Adds an [action] to the [emitter]s action queue of [type].
    */
   void listen(EventEmitter emitter, Type type, EventAction action){
-    _registerTranTypes();
     _initialiseIndexes(emitter, type);
     if(_typeIndexes[emitter][type] != null){
       throw new DuplicateEventSettingError(this, emitter, type, _typeIndexes[emitter][type], action);

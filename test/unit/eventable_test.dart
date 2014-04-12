@@ -12,14 +12,18 @@ part 'event_emitter_test.dart';
 part 'event_test.dart';
 part 'event_detector_test.dart';
 
-class TypeA extends Event{}
-class TypeB extends Event{}
+class TypeA implements IEvent{
+  EventEmitter emitter;
+}
+class TypeB implements IEvent{
+  EventEmitter emitter;
+}
 
 EventEmitter emitter1;
 EventEmitter emitter2;
 EventDetector detector;
 
-Event lastDetectedEvent;
+IEvent lastDetectedEvent;
 int eventADetectedCount;
 int eventBDetectedCount;
 
