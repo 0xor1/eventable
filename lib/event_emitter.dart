@@ -50,14 +50,10 @@ class EventEmitter{
   }
 
   /**
-   * Calls all the actions in the queue of [type] with the optional [event] asynchronously,
+   * Calls all the actions in the queue of [type] with the [IEvent] asynchronously,
    * returning a [Future] that completes when all of the actions have been called.
    */
-  Future emitEvent(Event event){
-    _registerTranTypes();
-    if(event == null){
-      event = new Event();
-    }
+  Future emitEvent(IEvent event){
     event.emitter = this;
 
     //make eventQueues execute async so only one event queue is ever executing at a time.
