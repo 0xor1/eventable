@@ -14,7 +14,7 @@ void runEventTests(){
 
     test('contains the emitter object by default.', (){
       emitter1.emitEvent(new TypeA());
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(lastDetectedEvent.emitter, equals(emitter1));
       }));
     });

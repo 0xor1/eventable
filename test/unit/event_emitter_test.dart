@@ -15,7 +15,7 @@ void runEventEmitterTests(){
     test('EventActions are called asynchronously.', (){
       emitter1.emitEvent(new TypeA());
       expect(lastDetectedEvent, equals(null));
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(lastDetectedEvent.emitter, equals(emitter1));
       }));
     });
@@ -27,7 +27,7 @@ void runEventEmitterTests(){
       emitter1.emitEvent(new TypeA());
       emitter1.emitEvent(new TypeB());
       emitter2.emitEvent(new TypeB());
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(eventADetectedCount, equals(2));
         expect(eventBDetectedCount, equals(1));
       }));
@@ -42,7 +42,7 @@ void runEventEmitterTests(){
       emitter1.emitEvent(new TypeA()).catchError((e){
         error = e;
       });
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(error is EmitTimeQueueChangeError, equals(true));
       }));
     });
