@@ -2,10 +2,8 @@
 
 Eventable provides 2 mixins to make your classes eventable, **EventEmitter** and
 **EventDetector**. Simply use these mixins to make your types either *emit*,
-*detect* or do *both* for *custom events*. To make a custom event simply extend 
-off of the **Event** class and specify an interface implementation, but you do 
-not have to implement it as **Event** is in fact a [Transmittable](http://pub.dartlang.org/packages/transmittable).
-One final note to be aware of is that events are emitted asynchronously. Usage is
+*detect* or do *both* for *custom events*. A custom event can be any object which 
+implements **IEvent**, Events are emitted asynchronously. Usage is
 best described with a simple example:
 
 ##Example
