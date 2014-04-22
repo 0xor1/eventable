@@ -16,7 +16,7 @@ void runEventDetectorTests(){
       detector.ignoreAllEvents();
       emitter1.emitEvent(new TypeA());
       emitter2.emitEvent(new TypeB());
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(0));
       }));
@@ -26,7 +26,7 @@ void runEventDetectorTests(){
       detector.ignoreAllEventsOfType(TypeA);
       emitter1.emitEvent(new TypeA());
       emitter2.emitEvent(new TypeB());
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(1));
       }));
@@ -36,7 +36,7 @@ void runEventDetectorTests(){
       detector.ignoreAllEventsFrom(emitter1);
       emitter1.emitEvent(new TypeA());
       emitter2.emitEvent(new TypeB());
-      Timer.run(expectAsync0((){
+      Timer.run(expectAsync((){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(1));
       }));
