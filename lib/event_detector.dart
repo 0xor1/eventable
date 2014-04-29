@@ -86,6 +86,7 @@ class EventDetector{
    * Removes all [EventAction]s this object has previously attached to all [EventEmitter]s and of all event types.
    */
   void ignoreAllEvents(){
+    if(_typeIndexes != null)
     while(_typeIndexes.isNotEmpty){
       ignoreAllEventsFrom(_typeIndexes.keys.first);
     }
