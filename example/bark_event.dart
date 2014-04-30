@@ -4,7 +4,7 @@
 
 part of EventableExample;
 
-class BarkEvent implements IEvent{
-  EventEmitter emitter;
+class BarkEvent extends Event implements IBarkEvent{}
+abstract class IBarkEvent{
   int volume;
 }

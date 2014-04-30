@@ -8,16 +8,10 @@ void runEventEmitterTests(){
 
   group('EventEmitter', (){
 
-    setUp(setUpTestObjects);
-
-    tearDown(tearDownTestObjects);
-
     test('EventActions are called asynchronously.', (){
       emitter1.emitEvent(new TypeA());
       expect(lastDetectedEvent, equals(null));
-      Timer.run(expectAsync((){
-        expect(lastDetectedEvent.emitter, equals(emitter1));
-      }));
+      expectAsyncWithReadyCheckAndTimeout(() => lastDetectedEvent != null, () => expect(lastDetectedEvent.originalEmitter, equals(emitter1)));
     });
 
     test('listening to Omni event type detects all events from an emitter.', (){
@@ -27,24 +21,28 @@ void runEventEmitterTests(){
       emitter1.emitEvent(new TypeA());
       emitter1.emitEvent(new TypeB());
       emitter2.emitEvent(new TypeB());
-      Timer.run(expectAsync((){
-        expect(eventADetectedCount, equals(2));
-        expect(eventBDetectedCount, equals(1));
-      }));
+      expectAsyncWithReadyCheckAndTimeout(
+        () => eventADetectedCount == 2 && eventBDetectedCount == 1,
+        (){
+          expect(eventADetectedCount, equals(2));
+          expect(eventBDetectedCount, equals(1)); 
+        });
     });
 
     test('throws an EmitTimeQueueChangeError if an attempt is made to add or remove an EventAction during the time that event is being emitted.', (){
-      var detectorCopy = detector;
+      var detector = new EventDetector();
       var error;
-      emitter1.addEventAction(TypeA, (event){
-          detectorCopy.ignoreAllEvents();
+      detector.listen(emitter1, TypeA, (event){
+          detector.ignoreAllEvents();
       });
       emitter1.emitEvent(new TypeA()).catchError((e){
         error = e;
       });
-      Timer.run(expectAsync((){
-        expect(error is EmitTimeQueueChangeError, equals(true));
-      }));
+      expectAsyncWithReadyCheckAndTimeout(
+        () => error != null,
+        (){
+          expect(error is EmitTimeQueueChangeError, equals(true));
+        });
     });
 
   });

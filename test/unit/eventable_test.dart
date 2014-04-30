@@ -12,18 +12,18 @@ part 'event_emitter_test.dart';
 part 'event_test.dart';
 part 'event_detector_test.dart';
 
-class TypeA implements IEvent{
-  EventEmitter emitter;
-}
-class TypeB implements IEvent{
-  EventEmitter emitter;
-}
+class TypeA extends Event{}
+class TypeB extends Event{}
 
+class Eventable extends Object with EventEmitter, EventDetector{}
+
+Eventable relay;
 EventEmitter emitter1;
 EventEmitter emitter2;
 EventDetector detector;
 
-IEvent lastDetectedEvent;
+Event lastDetectedEvent;
+Event lastRelayedEvent;
 int eventADetectedCount;
 int eventBDetectedCount;
 
@@ -38,14 +38,23 @@ EventAction detectEvent = (event){
 };
 
 void setUpTestObjects(){
+  relay = new Eventable();
   emitter1 = new EventEmitter();
   emitter2 = new EventEmitter();
   detector = new EventDetector();
 
   eventADetectedCount = eventBDetectedCount = 0;
 
-  detector.listen(emitter1, TypeA, detectEvent);
-  detector.listen(emitter2, TypeB, detectEvent);
+  relay.listen(emitter1, Omni, (event){
+    lastRelayedEvent = event;
+    relay.emitEvent(event);
+  });
+  relay.listen(emitter2, Omni, (event){
+    lastRelayedEvent = event;
+    relay.emitEvent(event); 
+  });
+  detector.listen(relay, TypeA, detectEvent);
+  detector.listen(relay, TypeB, detectEvent);
 }
 
 void tearDownTestObjects(){
@@ -53,8 +62,30 @@ void tearDownTestObjects(){
   eventADetectedCount = eventBDetectedCount = 0;
 }
 
+void expectAsyncWithReadyCheckAndTimeout(bool readyCheck(), void expect(), [int timeout = 1, void onTimeout() = null]){
+  DateTime start = new DateTime.now();
+  Duration limit = new Duration(seconds: timeout);
+  var inner;
+  inner = (){
+    if(readyCheck()){
+      expect();
+    }else if(new DateTime.now().subtract(limit).isAfter(start)){
+      if(onTimeout == null){
+        throw 'async test timed out';
+      }else{
+        onTimeout();
+      }
+    }else{
+      Timer.run(expectAsync(inner));
+    }
+  };
+  inner();
+}
+
 void main(){
 
+  setUp(setUpTestObjects);
+  tearDown(tearDownTestObjects);
   runEventEmitterTests();
   runEventTests();
   runEventDetectorTests();
