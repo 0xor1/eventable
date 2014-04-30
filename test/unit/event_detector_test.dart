@@ -22,6 +22,15 @@ void runEventDetectorTests(){
       }));
     });
 
+    test('calling ignore methods doesn\'t throw errors when no events are currently being listened for.', (){
+      var detector = new EventDetector();
+      var emitter = new EventEmitter();
+      detector.ignoreAllEvents();
+      detector.ignoreAllEventsFrom(emitter);
+      detector.ignoreAllEventsOfType(Object);
+      expect(true, equals(true));
+    });
+
     test('.ignoreAllEventsOfType(eventType) unhooks all EventActions of the specified type.', (){
       detector.ignoreAllEventsOfType(TypeA);
       emitter1.emitEvent(new TypeA());
