@@ -4,7 +4,9 @@
 
 part of Eventable;
 
+/**
+ * Every event must implement [IEvent]
+ */
 abstract class IEvent{
-  EventEmitter get originalEmitter;
-  EventEmitter get currentEmitter;
+  EventEmitter emitter;
 }

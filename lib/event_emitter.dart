@@ -50,14 +50,12 @@ class EventEmitter{
   }
 
   /**
-   * Calls all the actions in the queue of [type] with the [Event] asynchronously,
+   * Calls all the actions in the queue of [type] with the [IEvent] asynchronously,
    * returning a [Future] that completes when all of the actions have been called.
    */
-  Future emitEvent(Event event){
-    if(event.originalEmitter == null){
-      event.originalEmitter = this;
-    }
-    event.currentEmitter = this;
+  Future emitEvent(IEvent event){
+    event.emitter = this;
+
     //make eventQueues execute async so only one event queue is ever executing at a time.
     return new Future.delayed(new Duration(), (){
       _emittingType = reflect(event).type.reflectedType;

@@ -8,19 +8,15 @@ void runEventTests(){
 
   group('Event', (){
 
-    test('contains the original emitter object by default.', (){
-      emitter1.emitEvent(new TypeA());
-      expectAsyncWithReadyCheckAndTimeout(() => lastDetectedEvent != null, () => expect(lastDetectedEvent.originalEmitter, equals(emitter1)));
-    });
+    setUp(setUpTestObjects);
 
-    test('contains the current emitter object by default.', (){
-      emitter1.emitEvent(new TypeA());
-      expectAsyncWithReadyCheckAndTimeout(() => lastDetectedEvent != null, () => expect(lastDetectedEvent.currentEmitter, equals(relay)));
-    });
+    tearDown(tearDownTestObjects);
 
-    test('is extendable', (){
-      emitter1.emitEvent(new TypeA()..aDynamicProperty = 1);
-      expectAsyncWithReadyCheckAndTimeout(() => lastDetectedEvent != null, () => expect(lastDetectedEvent.aDynamicProperty, equals(1)));
+    test('contains the emitter object by default.', (){
+      emitter1.emitEvent(new TypeA());
+      Timer.run(expectAsync((){
+        expect(lastDetectedEvent.emitter, equals(emitter1));
+      }));
     });
 
   });
