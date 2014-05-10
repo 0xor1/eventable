@@ -66,9 +66,8 @@ but this leaves it to the user to handle how to manage removal of the attached *
 
 ##Omni
 
-There is a special event type **Omni** which is a special value
-which allows you to listen to every event emitted by an **EventEmitter** with a
-single **EventAction**.
+There is a special event type **Omni** which allows detectors to listen to every event emitted
+by an **EventEmitter** with a single **EventAction**.
 
 ##EventAction
 

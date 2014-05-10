@@ -1,11 +1,11 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
 part of Eventable;
 
 /**
- * Thrown when an [EventAction] attempts to add or remove [EventAction](s) from
+ * Thrown when an [EventAction] attempts to add or remove [EventAction]s from
  * the action queue currently being called.
  */
 class EmitTimeQueueChangeError{
