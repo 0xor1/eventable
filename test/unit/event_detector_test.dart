@@ -52,11 +52,7 @@ void runEventDetectorTests(){
     });
 
     test('throws a DuplicateEventSettingError if it attempts to listen to the same emitter/event_type combination more than once.', (){
-      try{
-        detector.listen(emitter1, TypeA, (event){});
-      }catch(error){
-        expect(error is DuplicateEventSettingError, equals(true));
-      }
+      expect(() => detector.listen(emitter1, TypeA, (event){}), throwsA(new isInstanceOf<DuplicateEventSettingError>()));
     });
 
   });

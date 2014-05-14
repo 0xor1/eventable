@@ -39,12 +39,7 @@ void runEventEmitterTests(){
       emitter1.addEventAction(TypeA, (event){
           detectorCopy.ignoreAllEvents();
       });
-      emitter1.emitEvent(new TypeA()).catchError((e){
-        error = e;
-      });
-      Timer.run(expectAsync((){
-        expect(error is EmitTimeQueueChangeError, equals(true));
-      }));
+      expect(emitter1.emitEvent(new TypeA()), throwsA(new isInstanceOf<EmitTimeQueueChangeError>()));
     });
 
   });
