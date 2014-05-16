@@ -1,13 +1,14 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of EventableExample;
+part of eventable.example;
 
 class Cat extends Object with EventDetector{
 
-  void dogBarkHandler(BarkEvent event){
-    if(event.volume > 10){
+  void dogBarkHandler(Event event){
+    var bark = event.data as Bark;
+    if(bark.volume > 10){
       runaway();
     }else{
       print('cat not disturbed');

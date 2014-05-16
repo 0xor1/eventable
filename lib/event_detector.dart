@@ -1,12 +1,12 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of Eventable;
+part of eventable;
 
 /**
  * Mixin to enable any object to detect custom events and manage [EventAction]s,
- * used in conjunction with [EventEmitter]s.
+ * used in conjunction with [EventEmitter].
  */
 class EventDetector{
 
@@ -86,6 +86,7 @@ class EventDetector{
    * Removes all [EventAction]s this object has previously attached to all [EventEmitter]s and of all event types.
    */
   void ignoreAllEvents(){
+    if(_typeIndexes != null)
     while(_typeIndexes.isNotEmpty){
       ignoreAllEventsFrom(_typeIndexes.keys.first);
     }

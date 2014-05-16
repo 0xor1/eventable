@@ -1,8 +1,8 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-library EventableTest;
+library eventable.test;
 
 import 'package:unittest/unittest.dart';
 import 'dart:async';
@@ -12,26 +12,22 @@ part 'event_emitter_test.dart';
 part 'event_test.dart';
 part 'event_detector_test.dart';
 
-class TypeA implements IEvent{
-  EventEmitter emitter;
-}
-class TypeB implements IEvent{
-  EventEmitter emitter;
-}
+class TypeA{}
+class TypeB{}
 
 EventEmitter emitter1;
 EventEmitter emitter2;
 EventDetector detector;
 
-IEvent lastDetectedEvent;
+Event lastDetectedEvent;
 int eventADetectedCount;
 int eventBDetectedCount;
 
 EventAction detectEvent = (event){
-  if(event is TypeA){
+  if(event.data is TypeA){
     eventADetectedCount++;
   }
-  else if(event is TypeB){
+  else if(event.data is TypeB){
     eventBDetectedCount++;
   }
   lastDetectedEvent = event;
@@ -54,9 +50,9 @@ void tearDownTestObjects(){
 }
 
 void main(){
-
+  setUp(setUpTestObjects);
+  tearDown(tearDownTestObjects);
   runEventEmitterTests();
   runEventTests();
   runEventDetectorTests();
-
 }

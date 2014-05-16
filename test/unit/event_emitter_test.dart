@@ -1,16 +1,12 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of EventableTest;
+part of eventable.test;
 
 void runEventEmitterTests(){
 
   group('EventEmitter', (){
-
-    setUp(setUpTestObjects);
-
-    tearDown(tearDownTestObjects);
 
     test('EventActions are called asynchronously.', (){
       emitter1.emitEvent(new TypeA());
@@ -39,11 +35,16 @@ void runEventEmitterTests(){
       emitter1.addEventAction(TypeA, (event){
           detectorCopy.ignoreAllEvents();
       });
-      emitter1.emitEvent(new TypeA()).catchError((e){
-        error = e;
-      });
+      expect(emitter1.emitEvent(new TypeA()), throwsA(new isInstanceOf<EmitTimeQueueChangeError>()));
+    });
+
+    test('emitEvent returns a Future which completes with the emitted event.', (){
+      var setInFuture;
+      emitter1.emitEvent(new TypeA()).then((event){ setInFuture = event; });
       Timer.run(expectAsync((){
-        expect(error is EmitTimeQueueChangeError, equals(true));
+        Timer.run(expectAsync((){
+          expect(setInFuture, equals(lastDetectedEvent));
+        }));
       }));
     });
 

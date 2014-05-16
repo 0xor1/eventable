@@ -1,16 +1,12 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of EventableTest;
+part of eventable.test;
 
 void runEventDetectorTests(){
 
   group('EventDetector', (){
-
-    setUp(setUpTestObjects);
-
-    tearDown(tearDownTestObjects);
 
     test('.ignoreAllEvents() unhooks all EventActions.', (){
       detector.ignoreAllEvents();
@@ -20,6 +16,15 @@ void runEventDetectorTests(){
         expect(eventADetectedCount, equals(0));
         expect(eventBDetectedCount, equals(0));
       }));
+    });
+
+    test('calling ignore methods doesn\'t throw errors when no events are currently being listened for.', (){
+      var detector = new EventDetector();
+      var emitter = new EventEmitter();
+      detector.ignoreAllEvents();
+      detector.ignoreAllEventsFrom(emitter);
+      detector.ignoreAllEventsOfType(Object);
+      expect(true, equals(true));
     });
 
     test('.ignoreAllEventsOfType(eventType) unhooks all EventActions of the specified type.', (){
@@ -43,11 +48,7 @@ void runEventDetectorTests(){
     });
 
     test('throws a DuplicateEventSettingError if it attempts to listen to the same emitter/event_type combination more than once.', (){
-      try{
-        detector.listen(emitter1, TypeA, (event){});
-      }catch(error){
-        expect(error is DuplicateEventSettingError, equals(true));
-      }
+      expect(() => detector.listen(emitter1, TypeA, (event){}), throwsA(new isInstanceOf<DuplicateEventSettingError>()));
     });
 
   });
