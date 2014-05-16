@@ -2,7 +2,7 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of Eventable;
+part of eventable;
 
 /**
  * Mixin to enable any object to detect custom events and manage [EventAction]s,

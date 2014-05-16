@@ -1,16 +1,12 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of EventableTest;
+part of eventable.test;
 
 void runEventDetectorTests(){
 
   group('EventDetector', (){
-
-    setUp(setUpTestObjects);
-
-    tearDown(tearDownTestObjects);
 
     test('.ignoreAllEvents() unhooks all EventActions.', (){
       detector.ignoreAllEvents();

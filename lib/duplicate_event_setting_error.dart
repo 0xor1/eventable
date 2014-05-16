@@ -2,7 +2,7 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of Eventable;
+part of eventable;
 
 /**
  * Thrown when [detector] attempts to add [newAction] to [emitter]s action queue
@@ -10,7 +10,7 @@ part of Eventable;
  */
 class DuplicateEventSettingError{
 
-  String get message => 'The detector is already listening for the "$type" event from the given emitter';
+  String get message => 'The detector is already listening for the "$type" event data type from the given emitter';
   final Type type;
   final EventEmitter emitter;
   final EventDetector detector;

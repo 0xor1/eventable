@@ -1,12 +1,12 @@
 /**
- * author: Daniel Robinson  http://github.com/0xor1
+ * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-library EventableExample;
+library eventable.example;
 
 import 'package:eventable/eventable.dart';
 
-part 'bark_event.dart';
+part 'bark.dart';
 part 'cat.dart';
 part 'dog.dart';
 
@@ -18,7 +18,7 @@ void main(){
   var dog = new Dog();
   var cat = new Cat();
 
-  cat.listen(dog, BarkEvent, cat.dogBarkHandler);
+  cat.listen(dog, Bark, cat.dogBarkHandler);
 
   dog.bark(9);  // cat not disturbed
   dog.bark(11); // cat runs away

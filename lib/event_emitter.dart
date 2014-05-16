@@ -2,7 +2,7 @@
  * Author:  Daniel Robinson http://github.com/0xor1
  */
 
-part of Eventable;
+part of eventable;
 
 /**
  * A mixin class to enable any object to emit custom events.
@@ -50,15 +50,17 @@ class EventEmitter{
   }
 
   /**
-   * Calls all the actions in the queue of [type] with the [IEvent] asynchronously,
-   * returning a [Future] that completes when all of the actions have been called.
+   * Calls all the actions in the queue of type [data] with an [Event] containing [data]
+   * asynchronously, returning a [Future] that completes with the [Event] when all of the
+   * [EventAction]s have been called.
    */
-  Future emitEvent(IEvent event){
-    event.emitter = this;
-
+  Future<Event> emitEvent(dynamic data){
+    var event = new Event._internal(this, data);
+    var finished;
     //make eventQueues execute async so only one event queue is ever executing at a time.
-    return new Future.delayed(new Duration(), (){
-      _emittingType = reflect(event).type.reflectedType;
+    finished = new Future<Event>.delayed(new Duration(), (){
+      event._finished = finished;
+      _emittingType = reflect(data).type.reflectedType;
       if(_actionQueues != null && _actionQueues[_emittingType] != null){
         _actionQueues[_emittingType].forEach((EventAction action){ action(event); });
       }
@@ -67,7 +69,10 @@ class EventEmitter{
         _actionQueues[Omni].forEach((EventAction action){ action(event); });
       }
       _emittingType = null;
+      return event;
     });
+
+    return finished;
   }
 
 }
