@@ -20,7 +20,7 @@ class Dog extends Object with EventEmitter{
 class Cat extends Object with EventDetector{
 
   void dogBarkHandler(Event event){
-  var bark = event.data as Bark;
+    var bark = event.data as Bark;
     if(bark.volume > 10){
       runaway();
     }else{
