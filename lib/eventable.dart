@@ -24,4 +24,4 @@ part 'event_detector.dart';
 abstract class Omni{}
 
 /// Function signature of an [EventAction].
-typedef void EventAction(Event event);
+typedef void EventAction<T>(Event<T> event);

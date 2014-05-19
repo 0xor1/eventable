@@ -6,8 +6,8 @@ part of eventable.example;
 
 class Cat extends Object with EventDetector{
 
-  void dogBarkHandler(Event event){
-    var bark = event.data as Bark;
+  void dogBarkHandler(Event<Bark> event){
+    var bark = event.data;
     if(bark.volume > 10){
       runaway();
     }else{

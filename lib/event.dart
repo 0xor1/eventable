@@ -7,12 +7,12 @@ part of eventable;
 /**
  * All event data comes inside an [Event] object.
  */
-class Event{
+class Event<T>{
 
   /// The emitting object
   final EventEmitter emitter;
   /// The event data
-  final dynamic data;
+  final T data;
   /// completes when the event has finished propogating
   Future get finished => _finished;
   Future _finished;
