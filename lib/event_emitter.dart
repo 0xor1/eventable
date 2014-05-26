@@ -45,6 +45,9 @@ class EventEmitter{
       _actionQueues[type].remove(action);
       if(_actionQueues[type].isEmpty){
         _actionQueues.remove(type);
+        if(_actionQueues.isEmpty){
+          _actionQueues = null;
+        }
       }
     }
   }
