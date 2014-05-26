@@ -8,8 +8,9 @@
  */
 library eventable;
 
-import 'dart:async';
+@MirrorsUsed(targets: const[], override: '*')
 import 'dart:mirrors';
+import 'dart:async';
 
 part 'emit_time_queue_change_error.dart';
 part 'duplicate_event_setting_error.dart';
