@@ -1,5 +1,5 @@
 name: eventable
-version: 5.1.0
+version: 5.1.1
 author: Daniel Robinson <daniel.robinson.dart@gmail.com>
 description: simple event system for implementing model->event->view design pattern.
 homepage: https://github.com/0xor1/eventable#eventable-
