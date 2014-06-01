@@ -70,15 +70,15 @@ typedef void EventAction(Event event);
 ##DuplicateEventSettingError
 
 A given **EventDetector** can only listen to a specific event-data-type from a specific
-**EventEmitter** once, therefore it is an error to try to attach more **EventAction**s
-to the same **EventEmitter**/event-data-type combination. If a second attempt is made
-by an **EventDetector** to listen to the same **EventEmitter**/event-data-type combination
+**EventEmitter** once, therefore it is an error to try to attach more **EventActions**
+to the same **EventEmitter** / event-data-type combination. If a second attempt is made
+by an **EventDetector** to listen to the same **EventEmitter** / event-data-type combination
 a **DuplicateEventSettingError** will be thrown.
 
 ##EmitTimeQueueChangeError
 
-It is not permitted to add or remove **EventAction**s whilst the event is being
+It is not permitted to add or remove **EventActions** whilst the event is being
 emitted, meaning you may not attach an **EventAction** to an event which adds or
-removes **EventAction**s from that same event-data-type queue, if such an attempt is made a 
-**EmitTimeQueueChangeError** will be thrown. to remove **EventAction**s for an emitting **Event**
+removes **EventActions** from that same event-data-type queue, if such an attempt is made a 
+**EmitTimeQueueChangeError** will be thrown. to remove **EventActions** for an emitting **Event**
 it is best to do so in the **finished** **Future** property on the **Event** object.
