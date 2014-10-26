@@ -8,7 +8,6 @@ part of eventable;
  * All event data comes inside an [Event] object.
  */
 class Event<T>{
-
   /// The emitting object
   final EventEmitter emitter;
   /// The event data
