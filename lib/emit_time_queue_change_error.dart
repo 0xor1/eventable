@@ -8,13 +8,10 @@ part of eventable;
  * Thrown when an [EventAction] attempts to add or remove [EventAction]s from
  * the action queue currently being called.
  */
-class EmitTimeQueueChangeError{
-
+class EmitTimeQueueChangeError extends Error{
   String get message => 'The emitter is currently emitting an event with data of type "$type", a call to add/removeEventAction at emit time, of that event data type, is an error.';
   final Type type;
   final EventEmitter emitter;
   final EventAction action;
-
-  const EmitTimeQueueChangeError(EventEmitter this.emitter, Type this.type, EventAction this.action);
-
+  EmitTimeQueueChangeError(EventEmitter this.emitter, Type this.type, EventAction this.action);
 }
